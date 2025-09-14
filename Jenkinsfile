@@ -1,61 +1,40 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Compiling and packaging application...'
-                // Example: Maven build
-                sh 'mvn clean package'
-            }
-        }
-
-        stage('Unit and Integration Tests') {
-            steps {
-                echo 'Running unit and integration tests...'
-                // Example: JUnit or Mocha
-                sh 'mvn test'
-            }
-        }
-
-        stage('Code Analysis') {
-            steps {
-                echo 'Running static code analysis...'
-                // Example: SonarQube or Checkstyle
-                sh 'mvn checkstyle:check || true'
-            }
-        }
-
-        stage('Security Scan') {
-            steps {
-                echo 'Performing security scan...'
-                // Example: OWASP Dependency-Check or Snyk
-                sh 'dependency-check.sh --project MyApp --scan . || true'
-            }
-        }
-
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying application to staging server...'
-                // Example: Copy to AWS EC2 / Docker container
-                sh 'scp target/myapp.jar user@staging-server:/opt/apps/'
-            }
-        }
-
-        stage('Integration Tests on Staging') {
-            steps {
-                echo 'Running integration tests on staging environment...'
-                // Example: Selenium or Postman tests
-                sh 'mvn verify -Pstaging-tests || true'
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying application to production server...'
-                // Example: Copy to production server
-                sh 'scp target/myapp.jar user@production-server:/opt/apps/'
-            }
-        }
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Stage 1: Build the code using Maven (or another build tool).'
+      }
     }
+    stage('Unit and Integration Tests') {
+      steps {
+        echo 'Stage 2: Run unit tests with JUnit and integration tests with Postman/Newman.'
+      }
+    }
+    stage('Code Analysis') {
+      steps {
+        echo 'Stage 3: Analyze code using SonarQube or Checkstyle.'
+      }
+    }
+    stage('Security Scan') {
+      steps {
+        echo 'Stage 4: Perform a security scan with OWASP Dependency-Check.'
+      }
+    }
+    stage('Deploy to Staging') {
+      steps {
+        echo 'Stage 5: Deploy application to staging server (e.g., AWS EC2).'
+      }
+    }
+    stage('Integration Tests on Staging') {
+      steps {
+        echo 'Stage 6: Run integration tests on staging environment.'
+      }
+    }
+    stage('Deploy to Production') {
+      steps {
+        echo 'Stage 7: Deploy application to production server.'
+      }
+    }
+  }
 }
